@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "705634457564",
+    "project_id": "drink-water-tracker",
+    "storage_bucket": "drink-water-tracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705634457564:android:b6165d84ad2d3fd37a2119",
+        "android_client_info": {
+          "package_name": "com.example.water_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "705634457564-j7km3rs4egodnueki36re5u0ktk6bn6v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJNFxCw0TEu7WqFYsNwuOHgg0oSuqzFzU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "705634457564-j7km3rs4egodnueki36re5u0ktk6bn6v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
