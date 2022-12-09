@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:water_tracker/modals/water_info.dart';
 
@@ -43,6 +46,13 @@ class _WaterInfoState extends State<WaterInfo> {
                 decoration: BoxDecoration(
                   color: const Color(0xff439A97),
                   borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 5,
+                      spreadRadius: 5,
+                    )
+                  ],
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -85,13 +95,17 @@ class _WaterInfoState extends State<WaterInfo> {
           ),
         ),
         TextButton(
-          onPressed: () {
+          onPressed: () async {
             final amount = _amount.text;
+            await waterInfoList
+                .addToDatabase(DateFormat.jm().format(DateTime.now()),
+                    double.parse(amount))
+                .then(
+                  (value) => Navigator.of(context).pop(),
+                );
             waterInfoList.addToList(
               double.parse(amount),
-              DateTime.now().toString(),
             );
-            Navigator.of(context).pop();
           },
           child: const Text(
             'Add',

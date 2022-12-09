@@ -1,13 +1,15 @@
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class WaterInfo {
   final double waterAmount;
   final String date;
-  final String id;
 
   WaterInfo({
-    required this.id,
     required this.waterAmount,
     required this.date,
   });
@@ -15,31 +17,49 @@ class WaterInfo {
 
 class WaterInfoList with ChangeNotifier {
   List<WaterInfo> _waterInfoList = [];
+  double _drankWater = 0.0;
 
   List<WaterInfo> get waterInfoList {
     return [..._waterInfoList];
   }
 
-  void addToList(double waterAmount, String id) {
+  void addToList(double waterAmount) {
     _waterInfoList.insert(
       0,
       WaterInfo(
-        id: id,
         waterAmount: waterAmount,
         date: DateFormat.jm().format(DateTime.now()),
       ),
     );
   }
 
+  double get waterDrank {
+    return _drankWater;
+  }
+
   void deleteFromList(index) {
     _waterInfoList.removeAt(index);
   }
 
-  double totalWaterAmount() {
-    double waterAmount = 0;
-    for (int i = 0; i < _waterInfoList.length; i++) {
-      waterAmount += _waterInfoList[i].waterAmount;
-    }
-    return waterAmount / 1000;
+  Future<void> addToDatabase(String date, double waterAmount) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc('abcxyz')
+        .collection("${DateFormat.yMMMMd('en_US').format(DateTime.now())}")
+        .doc()
+        .set({
+      'date': date,
+      'waterAmount': waterAmount,
+    });
+  }
+
+  Future<void> deleteFromDatabase(
+      AsyncSnapshot<QuerySnapshot> snapshot, int index) async {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc('abcxyz')
+        .collection('${DateFormat.yMMMMd('en_US').format(DateTime.now())}')
+        .doc(snapshot.data!.docs[index].id)
+        .delete();
   }
 }
