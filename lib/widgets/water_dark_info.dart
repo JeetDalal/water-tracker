@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:water_tracker/modals/water_info.dart';
 
 class WaterInfo extends StatefulWidget {
   const WaterInfo({Key? key}) : super(key: key);
@@ -8,10 +10,11 @@ class WaterInfo extends StatefulWidget {
 }
 
 class _WaterInfoState extends State<WaterInfo> {
-  TextEditingController _amount = TextEditingController();
+  final TextEditingController _amount = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final waterInfoList = Provider.of<WaterInfoList>(context);
     return AlertDialog(
       title: const Text(
         'Record Water Amount',
@@ -26,7 +29,7 @@ class _WaterInfoState extends State<WaterInfo> {
       backgroundColor: const Color(0xff97DECE),
       contentPadding: const EdgeInsets.all(0),
       content: Container(
-        height: 200,
+        height: 120,
         decoration: const BoxDecoration(
           color: Color(0xff97DECE),
         ),
@@ -82,7 +85,14 @@ class _WaterInfoState extends State<WaterInfo> {
           ),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            final amount = _amount.text;
+            waterInfoList.addToList(
+              double.parse(amount),
+              DateTime.now().toString(),
+            );
+            Navigator.of(context).pop();
+          },
           child: const Text(
             'Add',
             style: TextStyle(
