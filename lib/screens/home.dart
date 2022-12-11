@@ -54,7 +54,9 @@ class _HomePageState extends State<HomePage> {
                         progressColor: const Color(0xff62B6B7),
                         lineWidth: 20,
                         animation: true,
-                        percent: 1 - (_waterAmt / (3.7 * 1000)),
+                        percent: (1 - (_waterAmt / (3.7 * 1000))) < 0
+                            ? 0
+                            : (1 - (_waterAmt / (3.7 * 1000))),
                         radius: MediaQuery.of(context).size.width / 3 + 20,
                         center: Container(
                           height: MediaQuery.of(context).size.height / 3,
@@ -98,6 +100,12 @@ class _HomePageState extends State<HomePage> {
                                 const Text(
                                   "Drink Target",
                                   style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: Text(
+                                    waterInfoList.result(_waterAmt / 1000),
+                                  ),
                                 ),
                               ],
                             ),

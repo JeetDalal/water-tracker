@@ -62,4 +62,12 @@ class WaterInfoList with ChangeNotifier {
         .doc(snapshot.data!.docs[index].id)
         .delete();
   }
+
+  String result(double amountOfWaterDrank) {
+    if (amountOfWaterDrank < 3.7) {
+      return "Target Not\nReached😔";
+    } else {
+      return "Congrats!|You have\nreached your target🥳";
+    }
+  }
 }
